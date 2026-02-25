@@ -10,7 +10,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Mapped, relationship
 
-from db.base import Base
+from backend.app.db.base import Base
 
 
 class Link(Base):
