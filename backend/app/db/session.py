@@ -1,7 +1,7 @@
 from contextlib import asynccontextmanager
-from db.base import session_factory
+from db.base import async_session
 
-SessionLocal = session_factory()
+SessionLocal = async_session()
 
 
 @asynccontextmanager
