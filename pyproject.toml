@@ -7,8 +7,8 @@ dependencies = [
   "redis[hiredis]",
   "pydantic-settings",
   "python-jose[cryptography]",
-  "passlib[bcrypt]",
   "httpx",
+  "bcrypt>=5.0.0",
 ]
 name = "sniptw"
 version = "0.1.0"

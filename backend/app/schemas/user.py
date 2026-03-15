@@ -1,3 +1,4 @@
+from uuid import UUID
 from pydantic import BaseModel, ConfigDict, EmailStr
 from datetime import datetime
 
@@ -9,10 +10,10 @@ class UserCreate(BaseModel):
 
 
 class UserResponse(BaseModel):
-    id: int
+    id: UUID
     email: EmailStr
     username: str
-    is_active: datetime
+    is_active: bool
     created_at: datetime
 
     model_config = ConfigDict(from_attributes=True)

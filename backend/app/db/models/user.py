@@ -1,3 +1,4 @@
+from uuid import uuid4
 from sqlalchemy import Column, UUID, DateTime, String, Boolean, func
 from sqlalchemy.orm import Mapped, relationship
 
@@ -6,7 +7,7 @@ from backend.app.db.base import Base
 
 class User(Base):
     __tablename__ = "users"
-    id = Column(UUID, primary_key=True, unique=True, index=True)
+    id = Column(UUID, primary_key=True, default=uuid4)
     email = Column(String, nullable=False, index=True)
     username = Column(String, nullable=False)
     hashed_password = Column(String, nullable=False)

@@ -1,10 +1,11 @@
 from fastapi import FastAPI
 
+import backend.app.db.models
 from backend.app.api.v1.routes import auth
 
 app = FastAPI(title="sniptw", version="0.1.0")
 
-app.include_router(auth.router, prefix="api/v1/auth", tags=["Authentication"])
+app.include_router(auth.router, prefix="/api/v1/auth", tags=["Authentication"])
 
 
 @app.get(

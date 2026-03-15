@@ -1,22 +1,18 @@
-from passlib.context import CryptContext
-from datetime import datetime, timedelta, timezone, func
+import bcrypt
+from datetime import datetime, timedelta, timezone
 from jose import jwt
 
 from backend.app.core.config import settings
 
 
 def hash_password(password: str) -> str:
-    pwd_context = CryptContext(schemes=["bcrypt"], default="bcrypt")
-
-    hashed = pwd_context.hash(password)
-    return hashed
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(password.encode("utf-8"), salt)
+    return hashed.decode("utf-8")
 
 
 def verify_password(plain: str, hashed: str) -> bool:
-    pwd_context = CryptContext(schemes=["bcrypt"], default="bcrypt")
-
-    is_valid = pwd_context.verify(plain, hashed)
-    return is_valid
+    return bcrypt.checkpw(plain.encode("utf-8"), hashed.encode("utf-8"))
 
 
 def create_access_token(data: dict) -> str:
