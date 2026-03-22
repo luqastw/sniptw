@@ -1,3 +1,4 @@
+from uuid import uuid4
 from sqlalchemy import (
     Column,
     UUID,
@@ -16,7 +17,7 @@ from backend.app.db.base import Base
 class Link(Base):
     __tablename__ = "links"
 
-    id = Column(UUID, primary_key=True, index=True, unique=True)
+    id = Column(UUID, primary_key=True, index=True, unique=True, default=uuid4)
     slug = Column(String, index=True)
     original_url = Column(String(500), nullable=False)
     user_id = Column(UUID, ForeignKey("users.id"))

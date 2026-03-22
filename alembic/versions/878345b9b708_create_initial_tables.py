@@ -1,8 +1,8 @@
-"""Initial tables
+"""create initial tables
 
-Revision ID: 73bffd6dd994
-Revises: 5daeaa800c16
-Create Date: 2026-02-25 18:25:00.632161
+Revision ID: 878345b9b708
+Revises: 
+Create Date: 2026-03-22 13:04:52.459958
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '73bffd6dd994'
-down_revision: Union[str, Sequence[str], None] = '5daeaa800c16'
+revision: str = '878345b9b708'
+down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
@@ -31,7 +31,6 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_users_email'), 'users', ['email'], unique=False)
-    op.create_index(op.f('ix_users_id'), 'users', ['id'], unique=True)
     op.create_table('links',
     sa.Column('id', sa.UUID(), nullable=False),
     sa.Column('slug', sa.String(), nullable=True),
@@ -70,7 +69,6 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_links_slug'), table_name='links')
     op.drop_index(op.f('ix_links_id'), table_name='links')
     op.drop_table('links')
-    op.drop_index(op.f('ix_users_id'), table_name='users')
     op.drop_index(op.f('ix_users_email'), table_name='users')
     op.drop_table('users')
     # ### end Alembic commands ###

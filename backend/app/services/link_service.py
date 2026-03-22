@@ -58,6 +58,11 @@ class LinkService:
             )
 
         if link.password_hash:
+            if password is None:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="This link requires a password.",
+                )
             if not verify_password(password, link.password_hash):
                 raise HTTPException(
                     status_code=status.HTTP_401_UNAUTHORIZED,
@@ -78,3 +83,11 @@ class LinkService:
             )
 
         await self.repository.delete(link)
+
+    async def update_link(self, slug: str, user_id: UUID, data: LinkUpdate) -> Link:
+        link = await self.get_link_or_404(slug)
+        if link.user_id != user_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN, detail="Restricted action."
+            )
+        return await self.repository.update(link, data)
