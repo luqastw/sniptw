@@ -9,6 +9,7 @@ dependencies = [
   "python-jose[cryptography]",
   "httpx",
   "bcrypt>=5.0.0",
+  "user-agents>=2.2.0",
 ]
 name = "sniptw"
 version = "0.1.0"
