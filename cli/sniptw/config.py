@@ -7,7 +7,7 @@ CONFIG_DIR = Path.home() / ".config" / "sniptw"
 CONFIG_FILE = CONFIG_DIR / "config.json"
 TOKEN_FILE = CONFIG_DIR / "token"
 
-DEFAULT_API_URL = "http://localhost:8000"
+DEFAULT_API_URL = "sniptw-production.up.railway.app"
 
 
 def ensure_config_dir() -> None:
