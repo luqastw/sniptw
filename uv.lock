@@ -1022,7 +1022,7 @@ wheels = [
 [[package]]
 name = "sniptw"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "alembic" },
     { name = "asyncpg" },
@@ -1032,7 +1032,9 @@ dependencies = [
     { name = "pydantic-settings" },
     { name = "python-jose", extra = ["cryptography"] },
     { name = "redis", extra = ["hiredis"] },
+    { name = "rich" },
     { name = "sqlalchemy", extra = ["asyncio"] },
+    { name = "typer" },
     { name = "user-agents" },
 ]
 
@@ -1054,7 +1056,9 @@ requires-dist = [
     { name = "pydantic-settings" },
     { name = "python-jose", extras = ["cryptography"] },
     { name = "redis", extras = ["hiredis"] },
+    { name = "rich", specifier = ">=14.0.0" },
     { name = "sqlalchemy", extras = ["asyncio"] },
+    { name = "typer", specifier = ">=0.15.0" },
     { name = "user-agents", specifier = ">=2.2.0" },
 ]
 
