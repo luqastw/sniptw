@@ -38,7 +38,8 @@ class APIClient:
     def _handle_response(self, response: httpx.Response) -> dict[str, Any]:
         """Handle API response and raise appropriate errors."""
         if response.status_code == 401:
-            raise APIError("Not authenticated. Please login first.", 401)
+            detail = response.json().get("detail", "Not authenticated")
+            raise APIError(detail, 401)
         if response.status_code == 403:
             raise APIError("Permission denied.", 403)
         if response.status_code == 404:

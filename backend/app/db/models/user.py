@@ -8,8 +8,8 @@ from backend.app.db.base import Base
 class User(Base):
     __tablename__ = "users"
     id = Column(UUID, primary_key=True, default=uuid4)
-    email = Column(String, nullable=False, index=True)
-    username = Column(String, nullable=False)
+    email = Column(String, nullable=False, index=True, unique=True)
+    username = Column(String, nullable=False, unique=True)
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())

@@ -30,8 +30,8 @@ async def register(
 @router.post(
     "/login",
     response_model=Token,
-    summary="Login a existent user.",
-    description="Enter in a existing user account with email and password.",
+    summary="Login an existing user.",
+    description="Authenticate with email and password to receive an access token.",
 )
 async def login(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],

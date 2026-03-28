@@ -36,7 +36,7 @@ async def redirect(
     link_service = LinkService(link_repository)
     analytics_service = AnalyticsService(session)
 
-    ip = request.client.host
+    ip = request.client.host if request.client else "unknown"
     user_agent = request.headers.get("user-agent", "")
     referer = request.headers.get("referer", None)
 

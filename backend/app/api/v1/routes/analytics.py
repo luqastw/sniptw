@@ -23,6 +23,9 @@ async def get_link_stats(
 
     link = await link_service.get_link_or_404(slug)
     if link.user_id != current_user.id:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="You do not have access to this link's analytics.",
+        )
 
     return await analytics_service.get_stats(slug)

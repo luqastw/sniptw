@@ -18,7 +18,7 @@ class Link(Base):
     __tablename__ = "links"
 
     id = Column(UUID, primary_key=True, index=True, unique=True, default=uuid4)
-    slug = Column(String, index=True)
+    slug = Column(String, index=True, unique=True)
     original_url = Column(String(500), nullable=False)
     user_id = Column(UUID, ForeignKey("users.id"))
     click_count = Column(Integer, default=0)

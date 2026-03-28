@@ -14,7 +14,7 @@ console = Console()
 
 @app.command()
 def login(
-    username: str = typer.Option(None, "--username", "-u", help="Email or username"),
+    email: str = typer.Option(None, "--email", "-e", help="Email address"),
     password: str = typer.Option(None, "--password", "-p", help="Password"),
 ) -> None:
     """Login to sniptw and save access token."""
@@ -23,8 +23,8 @@ def login(
             raise typer.Exit()
 
     # Prompt for credentials if not provided
-    if not username:
-        username = Prompt.ask("[bold cyan]Email[/]")
+    if not email:
+        email = Prompt.ask("[bold cyan]Email[/]")
     if not password:
         password = Prompt.ask("[bold cyan]Password[/]", password=True)
 
@@ -34,7 +34,7 @@ def login(
         try:
             response = client.post(
                 "/api/v1/auth/login",
-                data={"username": username, "password": password},
+                data={"username": email, "password": password},
                 form_data=True,
             )
             save_token(response["access_token"])

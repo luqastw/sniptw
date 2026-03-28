@@ -15,18 +15,24 @@ async def get_current_user(
     token: Annotated[str, Depends(oauth2_scheme)],
     session: AsyncSession = Depends(get_session),
 ):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Invalid authentication credentials.",
+    )
     try:
         repository = UserRepository(session)
         payload = jwt.decode(
             token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
         )
 
-        user_email: str = payload.get("sub")
+        user_email: str | None = payload.get("sub")
+        if user_email is None:
+            raise credentials_exception
 
         user = await repository.get_by_email(user_email)
         if user is None:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+            raise credentials_exception
 
         return user
     except JWTError:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+        raise credentials_exception

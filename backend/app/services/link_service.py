@@ -4,7 +4,7 @@ from fastapi import HTTPException, status
 from secrets import token_urlsafe
 
 from backend.app.db.repositories.link_repository import LinkRepository
-from backend.app.schemas.link import LinkCreate
+from backend.app.schemas.link import LinkCreate, LinkUpdate
 from backend.app.core.security import hash_password, verify_password
 from backend.app.db.models.link import Link
 
@@ -77,7 +77,7 @@ class LinkService:
 
     async def delete_link(self, slug: str, user_id: UUID) -> None:
         link = await self.get_link_or_404(slug)
-        if not link.user_id == user_id:
+        if link.user_id != user_id:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN, detail="Restricted action."
             )
