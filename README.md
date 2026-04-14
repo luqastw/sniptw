@@ -2,8 +2,6 @@
 
 A high-performance URL shortener with a CLI-first design. Built with FastAPI, PostgreSQL, and async Python.
 
-**Live Demo:** https://sniptw-production.up.railway.app
-
 ---
 
 ## Table of Contents
@@ -85,47 +83,47 @@ sniptw/
 
 ### Runtime
 
-| Component | Technology | Purpose |
-|-----------|------------|---------|
-| Language | Python 3.14+ | Runtime environment |
-| Web Framework | FastAPI | Async HTTP API |
-| ORM | SQLAlchemy 2.0 | Async database access |
-| Database | PostgreSQL | Primary data store |
-| Cache | Redis | Session and rate limit storage |
-| Migrations | Alembic | Schema versioning |
+| Component     | Technology     | Purpose                        |
+| ------------- | -------------- | ------------------------------ |
+| Language      | Python 3.14+   | Runtime environment            |
+| Web Framework | FastAPI        | Async HTTP API                 |
+| ORM           | SQLAlchemy 2.0 | Async database access          |
+| Database      | PostgreSQL     | Primary data store             |
+| Cache         | Redis          | Session and rate limit storage |
+| Migrations    | Alembic        | Schema versioning              |
 
 ### Security
 
-| Component | Technology | Purpose |
-|-----------|------------|---------|
-| Password Hashing | bcrypt | Secure password storage |
-| Authentication | python-jose | JWT token generation and validation |
-| HTTPS | Uvicorn + Reverse Proxy | Transport encryption |
+| Component        | Technology              | Purpose                             |
+| ---------------- | ----------------------- | ----------------------------------- |
+| Password Hashing | bcrypt                  | Secure password storage             |
+| Authentication   | python-jose             | JWT token generation and validation |
+| HTTPS            | Uvicorn + Reverse Proxy | Transport encryption                |
 
 ### CLI
 
-| Component | Technology | Purpose |
-|-----------|------------|---------|
-| Framework | Typer | Command-line interface |
-| Output | Rich | Formatted terminal output |
-| HTTP Client | httpx | API communication |
+| Component   | Technology | Purpose                   |
+| ----------- | ---------- | ------------------------- |
+| Framework   | Typer      | Command-line interface    |
+| Output      | Rich       | Formatted terminal output |
+| HTTP Client | httpx      | API communication         |
 
 ### Development
 
-| Component | Technology | Purpose |
-|-----------|------------|---------|
-| Package Manager | uv | Dependency management |
-| Testing | pytest + pytest-asyncio | Test execution |
-| Linting | Ruff | Code quality |
-| Pre-commit | pre-commit | Git hooks |
+| Component       | Technology              | Purpose               |
+| --------------- | ----------------------- | --------------------- |
+| Package Manager | uv                      | Dependency management |
+| Testing         | pytest + pytest-asyncio | Test execution        |
+| Linting         | Ruff                    | Code quality          |
+| Pre-commit      | pre-commit              | Git hooks             |
 
 ### Deployment
 
-| Component | Technology | Purpose |
-|-----------|------------|---------|
-| Container | Docker | Application packaging |
-| Platform | Railway | Cloud hosting |
-| Build | Hatchling | Python package building |
+| Component | Technology | Purpose                 |
+| --------- | ---------- | ----------------------- |
+| Container | Docker     | Application packaging   |
+| Platform  | Railway    | Cloud hosting           |
+| Build     | Hatchling  | Python package building |
 
 ---
 
@@ -195,14 +193,14 @@ BASE_URL=http://localhost:8000
 
 ### Environment Variables
 
-| Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `DATABASE_URL` | Yes | - | PostgreSQL connection string with asyncpg driver |
-| `REDIS_URL` | No | `redis://localhost:6379` | Redis connection string |
-| `SECRET_KEY` | Yes | - | JWT signing key (minimum 32 characters) |
-| `ALGORITHM` | No | `HS256` | JWT algorithm |
-| `ACCESS_TOKEN_EXPIRE_MINUTES` | No | `30` | Token validity period |
-| `BASE_URL` | No | `http://localhost:8000` | Public URL for generated links |
+| Variable                      | Required | Default                  | Description                                      |
+| ----------------------------- | -------- | ------------------------ | ------------------------------------------------ |
+| `DATABASE_URL`                | Yes      | -                        | PostgreSQL connection string with asyncpg driver |
+| `REDIS_URL`                   | No       | `redis://localhost:6379` | Redis connection string                          |
+| `SECRET_KEY`                  | Yes      | -                        | JWT signing key (minimum 32 characters)          |
+| `ALGORITHM`                   | No       | `HS256`                  | JWT algorithm                                    |
+| `ACCESS_TOKEN_EXPIRE_MINUTES` | No       | `30`                     | Token validity period                            |
+| `BASE_URL`                    | No       | `http://localhost:8000`  | Public URL for generated links                   |
 
 ---
 
@@ -309,6 +307,7 @@ GET /health
 Returns API status.
 
 **Response:**
+
 ```json
 {
   "status": "online"
@@ -327,6 +326,7 @@ Content-Type: application/json
 Create a new user account.
 
 **Request Body:**
+
 ```json
 {
   "email": "user@example.com",
@@ -336,6 +336,7 @@ Create a new user account.
 ```
 
 **Response:** `201 Created`
+
 ```json
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -358,11 +359,13 @@ Content-Type: application/x-www-form-urlencoded
 Authenticate and receive an access token.
 
 **Request Body:**
+
 ```
 username=user@example.com&password=securepassword
 ```
 
 **Response:** `200 OK`
+
 ```json
 {
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
@@ -383,6 +386,7 @@ Content-Type: application/json
 Create a new short link.
 
 **Request Body:**
+
 ```json
 {
   "original_url": "https://example.com/very/long/url",
@@ -395,6 +399,7 @@ Create a new short link.
 All fields except `original_url` are optional. If `slug` is omitted, one is generated automatically.
 
 **Response:** `200 OK`
+
 ```json
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -419,6 +424,7 @@ Authorization: Bearer <token>
 Retrieve all links owned by the authenticated user.
 
 **Response:** `200 OK`
+
 ```json
 [
   {
@@ -444,6 +450,7 @@ GET /api/v1/links/{slug}
 Retrieve link details by slug. Does not require authentication.
 
 **Response:** `200 OK`
+
 ```json
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -469,6 +476,7 @@ Content-Type: application/json
 Update link properties. Only the link owner can update.
 
 **Request Body:**
+
 ```json
 {
   "original_url": "https://new-destination.com",
@@ -502,6 +510,7 @@ GET /{slug}
 Redirect to the original URL. Increments click counter and records analytics.
 
 **Response:** `302 Found`
+
 ```
 Location: https://example.com/original/url
 ```
@@ -518,6 +527,7 @@ Authorization: Bearer <token>
 Retrieve click statistics for a link. Only the link owner can access.
 
 **Response:** `200 OK`
+
 ```json
 {
   "slug": "abc123",
@@ -547,15 +557,15 @@ All errors follow a consistent format:
 }
 ```
 
-| Status Code | Description |
-|-------------|-------------|
-| `400` | Bad request (validation error, duplicate email/username) |
-| `401` | Unauthorized (missing or invalid token) |
-| `403` | Forbidden (insufficient permissions) |
-| `404` | Resource not found |
-| `409` | Conflict (duplicate slug) |
-| `410` | Gone (expired link) |
-| `422` | Unprocessable entity (invalid request body) |
+| Status Code | Description                                              |
+| ----------- | -------------------------------------------------------- |
+| `400`       | Bad request (validation error, duplicate email/username) |
+| `401`       | Unauthorized (missing or invalid token)                  |
+| `403`       | Forbidden (insufficient permissions)                     |
+| `404`       | Resource not found                                       |
+| `409`       | Conflict (duplicate slug)                                |
+| `410`       | Gone (expired link)                                      |
+| `422`       | Unprocessable entity (invalid request body)              |
 
 ---
 
@@ -563,40 +573,40 @@ All errors follow a consistent format:
 
 ### Users
 
-| Column | Type | Constraints |
-|--------|------|-------------|
-| `id` | UUID | Primary key |
-| `email` | VARCHAR | Unique, indexed |
-| `username` | VARCHAR | Not null |
-| `hashed_password` | VARCHAR | Not null |
-| `is_active` | BOOLEAN | Default: true |
-| `created_at` | TIMESTAMP | Auto-generated |
+| Column            | Type      | Constraints     |
+| ----------------- | --------- | --------------- |
+| `id`              | UUID      | Primary key     |
+| `email`           | VARCHAR   | Unique, indexed |
+| `username`        | VARCHAR   | Not null        |
+| `hashed_password` | VARCHAR   | Not null        |
+| `is_active`       | BOOLEAN   | Default: true   |
+| `created_at`      | TIMESTAMP | Auto-generated  |
 
 ### Links
 
-| Column | Type | Constraints |
-|--------|------|-------------|
-| `id` | UUID | Primary key |
-| `slug` | VARCHAR | Indexed |
-| `original_url` | VARCHAR(500) | Not null |
-| `user_id` | UUID | Foreign key to users |
-| `click_count` | INTEGER | Default: 0 |
-| `is_active` | BOOLEAN | Default: true |
-| `password_hash` | VARCHAR | Nullable |
-| `expires_at` | TIMESTAMP | Nullable |
-| `created_at` | TIMESTAMP | Auto-generated |
+| Column          | Type         | Constraints          |
+| --------------- | ------------ | -------------------- |
+| `id`            | UUID         | Primary key          |
+| `slug`          | VARCHAR      | Indexed              |
+| `original_url`  | VARCHAR(500) | Not null             |
+| `user_id`       | UUID         | Foreign key to users |
+| `click_count`   | INTEGER      | Default: 0           |
+| `is_active`     | BOOLEAN      | Default: true        |
+| `password_hash` | VARCHAR      | Nullable             |
+| `expires_at`    | TIMESTAMP    | Nullable             |
+| `created_at`    | TIMESTAMP    | Auto-generated       |
 
 ### Clicks
 
-| Column | Type | Constraints |
-|--------|------|-------------|
-| `id` | UUID | Primary key |
-| `link_id` | UUID | Foreign key to links |
-| `clicked_at` | TIMESTAMP | Auto-generated |
-| `country` | VARCHAR | Nullable |
-| `device_type` | VARCHAR | Nullable |
-| `referer` | VARCHAR | Nullable |
-| `ip_hash` | VARCHAR | SHA-256 of client IP |
+| Column        | Type      | Constraints          |
+| ------------- | --------- | -------------------- |
+| `id`          | UUID      | Primary key          |
+| `link_id`     | UUID      | Foreign key to links |
+| `clicked_at`  | TIMESTAMP | Auto-generated       |
+| `country`     | VARCHAR   | Nullable             |
+| `device_type` | VARCHAR   | Nullable             |
+| `referer`     | VARCHAR   | Nullable             |
+| `ip_hash`     | VARCHAR   | SHA-256 of client IP |
 
 ---
 
